@@ -1,0 +1,19 @@
+QPushButton{
+    background-color: blue;
+    padding: 15;
+    font-size: 20px;
+    margin-top: 20;
+}
+
+QLineEdit{
+    background-color: blueviolet;
+    font-size: 20px;
+}
+
+QLabel{
+    font-size: 20px;
+}
+
+.clear{
+    background-color: brown;
+}

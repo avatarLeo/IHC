@@ -10,7 +10,7 @@ class Window(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         self.create_component()
-        self.setGeometry(20, 20, 600, 300)
+        self.setGeometry(20, 20, 600, 250)
 
 
     def create_component(self):
@@ -26,8 +26,8 @@ class Window(QMainWindow):
 
         lbl_email = QLabel("Email:")
         left_layout.addWidget(lbl_email)
-        txt_email = QLineEdit()
-        left_layout.addWidget(txt_email)
+        self.txt_email = QLineEdit()
+        left_layout.addWidget(self.txt_email)
 
         btn_clear = QPushButton("Limpar")
         button_layout.addWidget(btn_clear)
@@ -66,6 +66,12 @@ class Window(QMainWindow):
 
     def play(self):
         self.player.play()
+        print(self.txt_email)
+        
+
+    
+    def play_video(self):
+        ...
 
 
 

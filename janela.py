@@ -1,9 +1,10 @@
 import sys
-from PyQt6.QtCore import Qt, QUrl, QRect
+from PyQt6.QtCore import Qt, QUrl, QRect, QEvent, QKeyCombination
+from PyQt6.QtGui import QFocusEvent
 from PyQt6.QtMultimedia import QMediaPlayer
 from PyQt6.QtMultimediaWidgets import QVideoWidget
 from PyQt6.QtWidgets import (QMainWindow, QApplication, QWidget, QVBoxLayout, QHBoxLayout, 
-                             QGridLayout, QPushButton, QLabel, QLineEdit)
+                             QGridLayout, QPushButton, QLabel, QLineEdit, QCheckBox)
 
 
 class Window(QMainWindow):
@@ -27,6 +28,7 @@ class Window(QMainWindow):
         lbl_email = QLabel("Email:")
         left_layout.addWidget(lbl_email)
         self.txt_email = QLineEdit()
+        self.txt_email.installEventFilter(self)
         left_layout.addWidget(self.txt_email)
 
         btn_clear = QPushButton("Limpar")
@@ -66,8 +68,15 @@ class Window(QMainWindow):
 
     def play(self):
         self.player.play()
-        print(self.txt_email)
-        
+        print(self.txt_email.hasFocus())
+        self.focusInEvent
+
+    def enterEvent(self, event):
+        print(event.type())
+
+    def focusInEvent(self, event: QFocusEvent | None) -> None:
+        print('event focus')
+        return super(self.txt_email, self).focusInEvent(event)
 
     
     def play_video(self):

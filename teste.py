@@ -1,32 +1,40 @@
 import sys
-from PyQt6.QtWidgets import QApplication, QWidget, QLineEdit, QPushButton
+from PyQt6 import QtWidgets
 
 
-class Example(QWidget):
+class Main(QtWidgets.QWidget):
 
-    def __init__(self):
-        super().__init__()
+    def __init__(self, parent=None):
+        super().__init__(parent)
 
-        self.initUI()
+        self.setWindowTitle("Qt Testing")
+        self.setGeometry(0, 0, 640, 120)
 
-    def initUI(self):
-        self.lineEdit = QLineEdit(self)
-        self.lineEdit.setGeometry(100, 100, 200, 30)
+        h = QtWidgets.QHBoxLayout()
 
-        self.button = QPushButton('Chamar função', self)
-        self.button.setGeometry(100, 150, 200, 30)
-        self.button.clicked.connect(self.lineEdit.setFocus)
+        w = ColorQLineEdit("one")
+        h.addWidget(w)
 
-        self.lineEdit.focusInEvent.connect(self.lineEditEmFoco)
+        w = ColorQLineEdit("two")
+        h.addWidget(w)
 
-        self.setWindowTitle('Exemplo de Foco em QLineEdit')
-        self.show()
-
-    def lineEditEmFoco(self):
-        print('LineEdit em Foco!')
+        self.setLayout(h)
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ex = Example()
-    sys.exit(app.exec())
+class ColorQLineEdit(QtWidgets.QLineEdit):
+
+    def focusInEvent(self, event):
+        print("in")
+        self.setStyleSheet("background-color: yellow; color: red;")
+        super().focusInEvent(event)
+
+    def focusOutEvent(self, event):
+        print("out")
+        self.setStyleSheet("background-color: white; color: black;")
+        super().focusOutEvent(event)
+
+app = QtWidgets.QApplication(sys.argv)
+jan = Main()
+jan.show()
+
+sys.exit(app.exec())

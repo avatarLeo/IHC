@@ -1,5 +1,8 @@
 import pyttsx3
 
+#link para gerar video em libras
+
+#https://video.vlibras.gov.br/#/
 # Inicialize o mecanismo TTS
 engine = pyttsx3.init()
 voices = engine.getProperty('voices')

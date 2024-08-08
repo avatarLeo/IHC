@@ -1,5 +1,6 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import QWidget, QApplication, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton, QSplitter
+from PyQt5.QtGui import QPixmap
 import sys
 
 
@@ -10,6 +11,7 @@ class Janela(QWidget):
         self.create_component()
 
     def create_component(self):
+        self.add_icon_profile()
         right_widget = QWidget()
         left_widget = QWidget()
         
@@ -22,17 +24,24 @@ class Janela(QWidget):
         input_email_layout = QHBoxLayout()
         input_password_layout = QHBoxLayout()
 
+        self.icon_sound_email = QLabel('icon')
+        self.icon_sound_email.setPixmap(self.add_image(30, 30, 'img/sound-transparent.png'))
+        self.icon_sound_password = QLabel('icon')
+        self.icon_sound_password.setPixmap(self.add_image(30, 30, 'img/sound-transparent.png'))
+
+
+
         self.txt_email = QLineEdit()
-        self.icon_sound = QLabel('icon')
-        son = self.icon_sound
+        self.txt_email.setPlaceholderText('Email')
+
         input_email_layout.addWidget(self.txt_email)
-        input_email_layout.addWidget(self.icon_sound)
+        input_email_layout.addWidget(self.icon_sound_email)
 
         self.txt_password = QLineEdit()
+        self.txt_password.setEchoMode(QLineEdit.EchoMode.Password)
+        self.txt_password.setPlaceholderText('Senha')
         input_password_layout.addWidget(self.txt_password)
-        input_password_layout.addWidget(son)
-
-        self.icon_profile = QLabel('icon profile')
+        input_password_layout.addWidget(self.icon_sound_password)
 
         self.btn_login = QPushButton('Login')
 
@@ -43,25 +52,45 @@ class Janela(QWidget):
         left_layout.addLayout(input_password_layout)
         left_layout.addWidget(self.btn_login)
         left_layout.addWidget(self.forgot_password)
-        right_widget.setLayout(left_layout)
+        left_widget.setLayout(left_layout)
+
+        #right layout
+
+        self.cat_icon = QLabel('Cat icon')
+        self.cat_icon.setPixmap(self.add_image(300, 300, 'img/cat.png'))
+
+        self.create_profile = QPushButton('Criar usuário')
+        right_layout.addWidget(self.cat_icon)
+        right_layout.addWidget(self.create_profile)
+
+        right_widget.setLayout(right_layout)
 
 
         splitter_layout = QSplitter()
         
-        splitter_layout.addWidget(right_widget)
         splitter_layout.addWidget(left_widget)
+        splitter_layout.addWidget(right_widget)
 
-        splitter_layout.setSizes([400, 400])
+        splitter_layout.setSizes([600, 400])
         layout.addWidget(splitter_layout)
 
         self.setLayout(layout)
 
+    def add_icon_profile(self):
+        self.icon_profile = QLabel()
+        self.pixmap_profile = QPixmap('img/profile.svg')
+        pixmap_profile_resize = self.pixmap_profile.scaled(200, 200, Qt.AspectRatioMode.IgnoreAspectRatio)
+        self.icon_profile.setPixmap(pixmap_profile_resize)
 
 
-        #right layout
+    def add_image(self, width, height, path_image):
+        self.pixmap_profile = QPixmap(path_image)
+        pixmap_profile_resize = self.pixmap_profile.scaled(width, height, Qt.AspectRatioMode.IgnoreAspectRatio)
+        return pixmap_profile_resize
 
-        self.cat_icon = QLabel()
-        self.create_profile = QPushButton()
+
+
+    
 
 
 

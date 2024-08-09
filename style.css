@@ -1,0 +1,35 @@
+*{
+    padding: 0;
+}
+
+QPushButton {
+    background-color: #72f2ce;
+    border: 2px solid #4ea67d;
+    border-radius: 6px;
+    height: 35px;
+}
+
+.forgot_password{
+    background-color: none;
+    border: none;
+}
+
+
+
+QLineEdit {
+    border: 2px solid #3f2773;
+    border-radius: 6px;
+    height: 35px;
+}
+
+.create_profile{
+    min-width: 300px;
+}
+
+.left_widget{
+    max-width: 400px;
+}
+
+.left_container{
+    background-color: #5abfbe;
+}

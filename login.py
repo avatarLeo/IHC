@@ -1,11 +1,11 @@
 from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QApplication, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton,
-                            QSplitter, QSizePolicy)
+                            QSplitter)
 from PyQt5.QtGui import QPixmap
 import sys
 
 
-class Janela(QWidget):
+class Janela_login(QWidget):
     def __init__(self) -> None:
         super().__init__()
         self.setGeometry(0, 0, 800, 500)
@@ -45,7 +45,7 @@ class Janela(QWidget):
 
 
         self.txt_email = QLineEdit()
-        self.txt_email.setPlaceholderText('Email')
+        self.txt_email.setPlaceholderText('Nome')
 
         input_email_layout.addWidget(self.txt_email)
         input_email_layout.addWidget(self.icon_sound_email)
@@ -116,7 +116,7 @@ class Janela(QWidget):
 if __name__ == '__main__':
     app = QApplication(sys.argv)
 
-    jan = Janela()
+    jan = Janela_login()
     jan.show()
 
     sys.exit(app.exec())

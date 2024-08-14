@@ -7,6 +7,8 @@ QPushButton {
     border: 2px solid #4ea67d;
     border-radius: 6px;
     height: 35px;
+    font-family: 'FreeSerif';
+    font-size: 20px;
 }
 
 .forgot_password{
@@ -15,12 +17,35 @@ QPushButton {
 }
 
 
+QLabel{
+    font-family: 'FreeSerif';
+    font-size: 26px;
+}
+
+
 
 QLineEdit {
     border: 2px solid #3f2773;
     border-radius: 6px;
     height: 35px;
+    font-family: 'FreeSerif';
+    font-size: 26px;
 }
+
+QComboBox {
+    background-color: #AEB6CC;
+    font-size: 26px;
+    margin-left: 30px;
+    font-family: 'FreeSerif';
+    margin-bottom: 10px;
+}
+
+QRadioButton{
+    font-size: 26px;
+    font-family: 'FreeSerif';
+    margin-bottom: 10px;
+}
+
 
 .create_profile{
     min-width: 300px;

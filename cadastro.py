@@ -37,6 +37,7 @@ class Janela_cadastro(QWidget):
         input_nome_layout = QHBoxLayout()
         input_raca_layout = QHBoxLayout()
         input_idade_layout = QHBoxLayout()
+        self.button_layout = QHBoxLayout()
 
         self.icon_sound_nome = QLabel('icon')
         self.icon_sound_nome.setPixmap(self.add_image(30, 30, 'img/sound-transparent.png'))
@@ -69,24 +70,25 @@ class Janela_cadastro(QWidget):
         input_idade_layout.addWidget(self.txt_idade)
         input_idade_layout.addWidget(self.icon_sound_idade)
 
-        self.btn_login = QPushButton('Login')
+        self.btn_cadastrar = QPushButton('Cadastrar')
     
 
-        self.forgot_password = QPushButton('Esquci a senha')
-        self.forgot_password.setProperty('class', 'forgot_password')
+        self.btn_clear = QPushButton('Limpar')
+        self.btn_clear.setProperty('class', 'limpar')
 
         self.title = QLabel('Cadastre o seu pet')
         self.title.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.left_layout.addWidget(self.title,stretch=2)
+        self.left_layout.addWidget(self.title, stretch=2)
         self.left_layout.addLayout(input_nome_layout, 1)
         self.left_layout.addLayout(input_raca_layout, 1)
         self.left_layout.addLayout(input_idade_layout, 1)
         self.create_combobox()
         self.create_radio_button()
-        self.left_layout.addWidget(self.btn_login, 1)
-        self.left_layout.addWidget(self.forgot_password, 0, Qt.AlignmentFlag.AlignHCenter)
+        self.button_layout.addWidget(self.btn_clear)
+        self.button_layout.addWidget(self.btn_cadastrar)
         left_widget.setLayout(self.left_layout)
+        self.left_layout.addLayout(self.button_layout)
 
 
         self.left_layout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
@@ -97,10 +99,7 @@ class Janela_cadastro(QWidget):
         self.cat_icon.setAlignment(Qt.AlignmentFlag.AlignCenter)
         self.cat_icon.setPixmap(self.add_image(300, 300, 'img/cat.png'))
 
-        self.create_profile = QPushButton('Criar usuário')
-        self.create_profile.setProperty('class', 'create_profile')
         right_layout.addWidget(self.cat_icon, 2)
-        right_layout.addWidget(self.create_profile, 0, Qt.AlignmentFlag.AlignCenter)
 
         right_widget.setLayout(right_layout)
 

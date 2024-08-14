@@ -9,17 +9,20 @@ QPushButton {
     height: 35px;
     font-family: 'FreeSerif';
     font-size: 20px;
+    color: #071a40;
 }
 
 .forgot_password{
     background-color: none;
     border: none;
+    color: #071a40;
 }
 
 
 QLabel{
     font-family: 'FreeSerif';
     font-size: 26px;
+    color: #071a40;
 }
 
 
@@ -30,6 +33,7 @@ QLineEdit {
     height: 35px;
     font-family: 'FreeSerif';
     font-size: 26px;
+    color: #071a40;
 }
 
 QComboBox {
@@ -38,12 +42,14 @@ QComboBox {
     margin-left: 30px;
     font-family: 'FreeSerif';
     margin-bottom: 10px;
+    color: #071a40;
 }
 
 QRadioButton{
     font-size: 26px;
     font-family: 'FreeSerif';
     margin-bottom: 10px;
+    color: #071a40;
 }
 
 
@@ -57,4 +63,9 @@ QRadioButton{
 
 .left_container{
     background-color: #5abfbe;
+}
+
+.limpar{
+    background-color: #3f2773;
+    color: #5abfbe;
 }

@@ -2,6 +2,7 @@ from PyQt5.QtCore import Qt
 from PyQt5.QtWidgets import (QWidget, QApplication, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton,
                             QSplitter)
 from PyQt5.QtGui import QPixmap
+from settings import *
 import sys
 
 
@@ -46,6 +47,7 @@ class Janela_login(QWidget):
 
         self.txt_email = QLineEdit()
         self.txt_email.setPlaceholderText('Nome')
+        self.txt_email.installEventFilter(self)
 
         input_email_layout.addWidget(self.txt_email)
         input_email_layout.addWidget(self.icon_sound_email)
@@ -106,6 +108,20 @@ class Janela_login(QWidget):
         self.pixmap_profile = QPixmap(path_image)
         pixmap_profile_resize = self.pixmap_profile.scaled(width, height, Qt.AspectRatioMode.IgnoreAspectRatio)
         return pixmap_profile_resize
+    
+    def eventFilter(self):
+        ...
+        
+    
+    def deficiency(self):
+        self.deficiency = COM_DEFICIENCIA_VISUAL
+        return self.deficiency
+    
+    def acessibilty(self):
+        if self.deficiency() == COM_DEFICIENCIA_VISUAL:
+            ...
+        elif self.deficiency() == COM_DEFICIENCIA_AUDITIVA:
+            ...
 
 
 

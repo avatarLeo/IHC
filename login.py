@@ -1,8 +1,8 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import (QWidget, QApplication, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton,
-                            QSplitter)
-from PyQt5.QtGui import QPixmap
-from settings import *
+                            QSplitter, QMessageBox)
+from PyQt5.QtGui import QPixmap, QMovie
+from acessibility import *
 import sys
 
 
@@ -30,7 +30,7 @@ class Janela_login(QWidget):
         container_layout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
         left_container.setLayout(container_layout)
         left_container.setProperty('class', 'left_container')
-        right_layout = QVBoxLayout()
+        self.right_layout = QVBoxLayout()
         layout = QVBoxLayout()
 
         
@@ -46,7 +46,7 @@ class Janela_login(QWidget):
 
 
         self.txt_email = QLineEdit()
-        self.txt_email.setPlaceholderText('Nome')
+        self.txt_email.setPlaceholderText('Email')
         self.txt_email.installEventFilter(self)
 
         input_email_layout.addWidget(self.txt_email)
@@ -55,14 +55,19 @@ class Janela_login(QWidget):
         self.txt_password = QLineEdit()
         self.txt_password.setEchoMode(QLineEdit.EchoMode.Password)
         self.txt_password.setPlaceholderText('Senha')
+        self.txt_password.installEventFilter(self)
         input_password_layout.addWidget(self.txt_password)
         input_password_layout.addWidget(self.icon_sound_password)
 
         self.btn_login = QPushButton('Login')
+        self.btn_login.installEventFilter(self)
+        self.btn_login.setDefault(True)
+        self.btn_login.clicked.connect(self.login)
         # self.btn_login.setSizePolicy(QSizePolicy())
     
 
         self.forgot_password = QPushButton('Esquci a senha')
+        self.forgot_password.installEventFilter(self)
         self.forgot_password.setProperty('class', 'forgot_password')
 
         self.icon_profile = QLabel()
@@ -86,11 +91,12 @@ class Janela_login(QWidget):
         self.cat_icon.setPixmap(self.add_image(300, 300, 'img/cat.png'))
 
         self.create_profile = QPushButton('Criar usuário')
+        self.create_profile.installEventFilter(self)
         self.create_profile.setProperty('class', 'create_profile')
-        right_layout.addWidget(self.cat_icon, 2)
-        right_layout.addWidget(self.create_profile, 0, Qt.AlignmentFlag.AlignCenter)
+        self.right_layout.addWidget(self.cat_icon, 2)
+        self.right_layout.addWidget(self.create_profile, 0, Qt.AlignmentFlag.AlignCenter)
 
-        right_widget.setLayout(right_layout)
+        right_widget.setLayout(self.right_layout)
 
 
         splitter_layout = QSplitter()
@@ -109,19 +115,61 @@ class Janela_login(QWidget):
         pixmap_profile_resize = self.pixmap_profile.scaled(width, height, Qt.AspectRatioMode.IgnoreAspectRatio)
         return pixmap_profile_resize
     
-    def eventFilter(self):
-        ...
+    def eventFilter(self, width, event):
+        if event.type() == QEvent.Type.FocusIn:
+            if width == self.txt_email:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/login/email.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-login/email.gif')
+            elif width == self.txt_password:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/login/senha.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-login/senha.gif')
+            elif width == self.btn_login:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/login/login.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-login/login.gif')
+            elif width == self.create_profile:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/login/criar-usuario.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-login/criar-usuario.gif')
+            elif width == self.forgot_password:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/login/esqueceu-senha.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-login/esqueceu-senha.gif')
+        elif QEvent.Type.KeyPress == event.type():
+            print(QEvent.Type.Enter, event.type())
+
+
+        return super().eventFilter(width, event)
         
     
-    def deficiency(self):
-        self.deficiency = COM_DEFICIENCIA_VISUAL
+    def deficiency_type(self):
+        self.deficiency = SEM_DEFICIENCIA
         return self.deficiency
     
-    def acessibilty(self):
-        if self.deficiency() == COM_DEFICIENCIA_VISUAL:
-            ...
-        elif self.deficiency() == COM_DEFICIENCIA_AUDITIVA:
-            ...
+
+    def movies(self, path_movie='', in_focus=True):
+        if in_focus:    
+            move = QMovie(path_movie)
+            
+            self.cat_icon.setMovie(move)
+            move.start()
+           
+        else:
+            self.cat_icon.clear()
+
+    def login(self):
+        email = self.txt_email
+
+        text = 'Login feito com sucesso'
+        # voice(text)
+        QMessageBox.information(self, 'Feito!', 'Login feito com sucesso!')
 
 
 

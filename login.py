@@ -1,7 +1,7 @@
-from PyQt5.QtCore import Qt, QEvent
+from PyQt5.QtCore import Qt, QEvent, QSize
 from PyQt5.QtWidgets import (QWidget, QApplication, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton,
                             QSplitter, QMessageBox)
-from PyQt5.QtGui import QPixmap, QMovie
+from PyQt5.QtGui import QPixmap, QMovie, QIcon
 from acessibility import *
 import sys
 
@@ -20,16 +20,22 @@ class Janela_login(QWidget):
 
         right_widget = QWidget()
         left_widget = QWidget()
-        left_container = QWidget()
+        self.left_container = QWidget()
 
         left_widget.setProperty('class', 'left_widget')
+
+        btn_settings = QPushButton()
+        btn_settings.setIcon(QIcon(self.add_image(300, 300, 'img/settings.png')))
+        btn_settings.setIconSize(QSize(40, 40))
+        btn_settings.setProperty('class', 'settings')
         
         left_layout = QVBoxLayout()
         container_layout = QVBoxLayout()
+        container_layout.addWidget(btn_settings, 0, Qt.AlignmentFlag.AlignRight)
         container_layout.addWidget(left_widget)
         container_layout.setAlignment(Qt.AlignmentFlag.AlignHCenter)
-        left_container.setLayout(container_layout)
-        left_container.setProperty('class', 'left_container')
+        self.left_container.setLayout(container_layout)
+        self.left_container.setProperty('class', 'left_container')
         self.right_layout = QVBoxLayout()
         layout = QVBoxLayout()
 
@@ -101,7 +107,7 @@ class Janela_login(QWidget):
 
         splitter_layout = QSplitter()
         
-        splitter_layout.addWidget(left_container)
+        splitter_layout.addWidget(self.left_container)
         splitter_layout.addWidget(right_widget)
 
         splitter_layout.setSizes([600, 400])
@@ -163,6 +169,7 @@ class Janela_login(QWidget):
            
         else:
             self.cat_icon.clear()
+
 
     def login(self):
         email = self.txt_email

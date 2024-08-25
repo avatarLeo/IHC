@@ -1,7 +1,8 @@
-from PyQt5.QtCore import Qt
+from PyQt5.QtCore import Qt, QEvent
 from PyQt5.QtWidgets import (QWidget, QApplication, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton,
                             QSplitter, QRadioButton, QComboBox)
-from PyQt5.QtGui import QPixmap
+from PyQt5.QtGui import QPixmap, QMovie
+from acessibility import *
 import sys
 
 
@@ -51,13 +52,16 @@ class Janela_cadastro(QWidget):
 
 
         self.txt_nome = QLineEdit()
+        self.txt_nome.installEventFilter(self)
         self.txt_nome.setPlaceholderText('Nome')
 
         self.txt_raca = QLineEdit()
+        self.txt_raca.installEventFilter(self)
         self.txt_raca.setPlaceholderText('Raça')
 
 
         self.txt_idade = QLineEdit()
+        self.txt_idade.installEventFilter(self)
         self.txt_idade.setPlaceholderText('idade')
 
         input_nome_layout.addWidget(self.txt_nome)
@@ -161,6 +165,56 @@ class Janela_cadastro(QWidget):
 
         if rb.isChecked():
             print(rb.text())
+
+
+    def eventFilter(self, width, event):
+        if event.type() == QEvent.Type.FocusIn:
+            if width == self.txt_nome:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/cadastro/nome.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-cadastro/nome.gif')
+            elif width == self.txt_raca:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/cadastro/raca.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-cadastro/raca.gif')
+            elif width == self.txt_idade:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/cadastro/idade.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-cadastro/idade.gif')
+            elif width == self.btn_cadastrar:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/login/criar-usuario.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-login/criar-usuario.gif')
+            elif width == self.btn_clear:
+                if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                    sounds('sound/login/esqueceu-senha.mp3')
+                elif self.deficiency_type() == COM_DEFICIENCIA_AUDITIVA:
+                    self.movies('gifs/gifs-login/esqueceu-senha.gif')
+        elif QEvent.Type.KeyPress == event.type():
+            print(QEvent.Type.Enter, event.type())
+
+
+        return super().eventFilter(width, event)
+        
+    
+    def deficiency_type(self):
+        self.deficiency = COM_DEFICIENCIA_AUDITIVA
+        return self.deficiency
+    
+
+    def movies(self, path_movie='', in_focus=True):
+        if in_focus:    
+            move = QMovie(path_movie)
+            
+            self.cat_icon.setMovie(move)
+            move.start()
+           
+        else:
+            self.cat_icon.clear()
 
 
     

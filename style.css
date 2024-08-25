@@ -10,12 +10,6 @@ QPushButton {
     color: #071a40;
 }
 
-.forgot_password{
-    background-color: none;
-    border: none;
-    color: #071a40;
-}
-
 
 QLabel{
     font-family: 'FreeSerif';
@@ -51,6 +45,14 @@ QRadioButton{
 }
 
 
+.forgot_password{
+    background-color: none;
+    border: none;
+    color: #071a40;
+}
+
+
+
 .create_profile{
     min-width: 300px;
 }
@@ -67,3 +69,15 @@ QRadioButton{
     background-color: #3f2773;
     color: #5abfbe;
 }
+
+.settings{
+    width: 50px;
+    height: 50px;
+    background-color: none;
+    border: none;
+}
+
+.settings:hover{
+    background-color: #72f2ce;
+}
+

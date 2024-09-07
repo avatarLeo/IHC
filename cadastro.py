@@ -14,6 +14,7 @@ class Janela_cadastro(QWidget):
         self.create_component()
         self.new_window = JanelaDeConfiguracao()
         self.pet = ''
+        self.service_type = ''
 
     def create_component(self):
 

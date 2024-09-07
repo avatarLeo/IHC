@@ -1,8 +1,9 @@
 from PyQt5.QtCore import Qt, QEvent, QSize
 from PyQt5.QtWidgets import (QWidget, QApplication, QVBoxLayout, QHBoxLayout, QLineEdit, QLabel, QPushButton,
-                            QSplitter, QRadioButton, QComboBox)
+                            QSplitter, QRadioButton, QComboBox, QMessageBox)
 from PyQt5.QtGui import QPixmap, QMovie, QIcon
 from acessibility import *
+from sttings import JanelaDeConfiguracao
 import sys
 
 
@@ -11,6 +12,8 @@ class Janela_cadastro(QWidget):
         super().__init__()
         self.setGeometry(0, 0, 800, 500)
         self.create_component()
+        self.new_window = JanelaDeConfiguracao()
+        self.pet = ''
 
     def create_component(self):
 
@@ -28,6 +31,7 @@ class Janela_cadastro(QWidget):
         btn_settings.setIcon(QIcon(self.add_image(300, 300, 'img/settings.png')))
         btn_settings.setIconSize(QSize(40, 40))
         btn_settings.setProperty('class', 'settings')
+        btn_settings.clicked.connect(self.window_settings)
         
         self.left_layout = QVBoxLayout()
         container_layout = QVBoxLayout()
@@ -83,6 +87,7 @@ class Janela_cadastro(QWidget):
         self.btn_cadastrar = QPushButton('Cadastrar')
         self.btn_cadastrar.installEventFilter(self)
         self.btn_cadastrar.setDefault(True)
+        self.btn_cadastrar.clicked.connect(self.cadastrar)
     
 
         self.btn_clear = QPushButton('Limpar')
@@ -198,11 +203,13 @@ class Janela_cadastro(QWidget):
         rb = self.sender()
 
         if rb.isChecked():
-            print(rb.text())
+            self.pet = rb.text()
 
 
     def eventFilter(self, widget, event):
         if event.type() == QEvent.Type.FocusIn:
+            if self.deficiency_type() == SEM_DEFICIENCIA or self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+                self.cat_icon.setPixmap(self.add_image(300, 300, 'img/cat.png'))
             if widget == self.txt_nome:
                 if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
                     sounds('sound/cadastro/nome.mp3')
@@ -254,8 +261,10 @@ class Janela_cadastro(QWidget):
         
     
     def deficiency_type(self):
-        self.deficiency = COM_DEFICIENCIA_AUDITIVA
-        return self.deficiency
+        return self.new_window.deficiency
+    
+    def window_settings(self):
+        self.new_window.show()
     
 
     def movies(self, path_movie='', in_focus=True):
@@ -267,6 +276,27 @@ class Janela_cadastro(QWidget):
            
         else:
             self.cat_icon.clear()
+
+    def cadastrar(self):
+        text = 'Confira as informações '
+        nome = self.txt_nome.text()
+        text += ' nome do pet ' + nome
+        raca = self.txt_raca.text()
+        text += ' raça ' + raca
+        idade = self.txt_idade.text()
+        text += ' idade ' + idade + ' anos'
+        pet = self.pet
+        text += ' tipo de pet ' + pet
+        service = self.service_type
+        text += ' serviço ' + service
+
+        if self.deficiency_type() == COM_DEFICIENCIA_VISUAL:
+            voice(text)
+        else:
+            QMessageBox.information(self, 'Cadastrando', 'Cadastrado com sucesso!')
+
+
+
 
 
     

@@ -17,7 +17,7 @@ def voice(text):
     #language
     engine.setProperty("voice", "brazil")
     #speed
-    engine.setProperty("rate", 140)
+    engine.setProperty("rate", 110)
 
     engine.say(text)
     engine.runAndWait()

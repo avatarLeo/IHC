@@ -81,3 +81,7 @@ QRadioButton{
     background-color: #72f2ce;
 }
 
+.deficiency_settings{
+    width: 60px;
+    height: 40px;
+}
